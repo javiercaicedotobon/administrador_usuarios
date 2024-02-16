@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title%}
+Inicio{% endblock title%}
+
+{% block content %}
+{% include "includes/header.html" %}
+    
+    <h5 style='padding-top: 1%'>Usuario : {{user}}</h5>
+    
+
+<!-- INICIO MENSAJE DE BIENVENIDA-->
+<div class='grid-x align-center'>
+    <h1 class='cell large-8' style='font-size: 25px; text-align:center; padding-top: 8%'>Bienvenido a el Sistema de Gestion de Usuarios</h1>
+    <div class='cell large-7'>
+        <div class="callout secondary">
+            <h5>Controla todos tus usuario desde esta APP</h5>
+            <p>
+                Esta aplicacion esta diseñada para que el administrador pueda controlar sus usuarios,
+                pueden agregar, modificar y eliminar usuarios
+            <a href="#">Ver los usuarios</a>
+          </div>
+    </div>
+</div>
+
+<!-- FIN MENSAJE DE BIENVENIDA-->
+
+{% endblock content %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title%}
+Todos los usuarios
+{% endblock title%}
+
+{% block content %}
+
+<h4 style="text-align:center; padding-top: 3%">TODOS LOS USUARIOS</h4>
+    
+
+    <!--INICIO DE LA TABLA-->
+<div style='padding-top: 1%; padding-left: 10%; padding-right: 10%'>
+    <table>
+        <thead>
+        <tr>
+            <th width="100">USERNAME</th>
+            <th width='100'>NOMBRES</th>
+            <th width="100">APELLIDOS</th>
+            <th width="100">USUARIO ACTIVO</th>
+            <th width="50">CODIGO DE REGISTRO</th>
+            <th width="50">ACCIONES</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for u in allusers %}
+        <tr>
+            <td>{{u.username}}</td>
+            <td>{{u.nombres}}</td>
+            <td>{{u.apellidos}}</td>
+            <td>{{u.is_active}}</td>
+            <td>{{u.codregistro}}</td>
+            <td>
+                <a class="button primary" href="">Ver</a>
+            </td>
+        </tr>
+        {% endfor %} 
+            
+        </tbody>
+    </table>
+</div>
+
+{% endblock content %}
