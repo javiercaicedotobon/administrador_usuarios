@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import FormView, View, UpdateView, ListView
+from django.views.generic import FormView, View, UpdateView, ListView, DeleteView, DetailView, TemplateView
 from .models import User
 from .functions import create_code
 from .forms import CreateUserForm,LoginUserForm,UpdateUserForm, VerificationUserForm,UpdatePasswordForm 
@@ -28,6 +28,7 @@ class CreateUserView(FormView):
             nombres = form.cleaned_data['nombres'],
             apellidos = form.cleaned_data['apellidos'],
             genero = form.cleaned_data['genero'],
+            foto = form.cleaned_data['foto'],
             codregistro = codigo
         )
         
@@ -77,25 +78,7 @@ class LogoutUser(View):
                 'users_app:login'
                 )
         )
-        
-        
-        
-class UserUpdateView(UpdateView):
-    model = User
-    template_name = 'users/update-user.html'
-    form_class = UpdateUserForm
-    success_url = reverse_lazy('home_app:home')
-
-
-
-class UserListView(ListView):
-    model = User
-    template_name = 'users/allusers.html'
-    context_object_name = 'allusers'
-
-
-
-
+           
 class ActiveUser(FormView):
     #model = User
     template_name = 'users/active-user.html'
@@ -123,7 +106,7 @@ class UpdatePasswordView(FormView):
     template_name = 'users/update-password.html'
     form_class = UpdatePasswordForm
     success_url = reverse_lazy('users_app:login')
-    login_url = reverse_lazy('user_app:login')
+    login_url = reverse_lazy('users_app:login')
     
     
     def form_valid(self, form):
@@ -142,4 +125,72 @@ class UpdatePasswordView(FormView):
         logout(self.request)        
         
         return super(UpdatePasswordView, self).form_valid(form)
+
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    template_name = 'users/update-user.html'
+    form_class = UpdateUserForm
+    success_url = reverse_lazy('home_app:home')
+    login_url = reverse_lazy('users_app:login')
+
+
+
+class UserListView(LoginRequiredMixin, ListView):
+    model = User
+    template_name = 'users/allusers.html'
+    context_object_name = 'allusers'
+    login_url = reverse_lazy('users_app:login')
+    ordering = 'id'
+    paginate_by = 5
+
+
+
+class UserAdminUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    template_name = 'users/update-admin-user.html'
+    context_object_name = 'usuario'
+    success_url = reverse_lazy('users_app:users_all')
+    login_url = reverse_lazy('users_app:login')
+    fields = (            
+            'nombres',
+            'apellidos',
+            'genero',
+            'email',            
+        )
+    
+    
+
+class UserAdminDeleteView(LoginRequiredMixin, DeleteView):
+    model = User
+    context_object_name = 'usuario'
+    template_name = 'users/delete-user.html'
+    success_url = reverse_lazy('users_app:users_all')
+    login_url = reverse_lazy('users_app:login')
+
+
+class UserAdminDetailView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'users/detail-user.html'
+    context_object_name = 'usuario'
+    login_url = reverse_lazy('users_app:login')
+    
+  
+
+class UserDetailView(LoginRequiredMixin, DeleteView):    
+    template_name = 'users/user-info.html'
+    context_object_name = 'usuario'
+    login_url = reverse_lazy('users_app:login')
+    
+    
+    def get_queryset(self):
+        
+        dato = self.kwargs['pk']
+        resultado = User.objects.filter(
+            id = dato
+        )
+        return resultado
+    
+        
     

@@ -8,10 +8,12 @@ Ingresar
 
 {% block content %}
     <h1 style="text-align:center; padding-top: 6%" >ACCEDER AL SISTEMA</h1>
-    <form method="POST" style='padding-top: 2%; padding-left: 30%; padding-right: 30%'>{% csrf_token %}
+    <form method="POST" style='padding-top: 2%; padding-left: 40%; padding-right: 40%'>{% csrf_token %}
         {{form.as_p}}
-        
-        <button class="submit success button">Acceder</button><br>
-        <a href="{% url 'users_app:crear' %}" class="button">Crear Usuario</a>
+
+        <div style="text-align:center">  
+        <button class="submit success button">Acceder</button>  
+        <a href="{% url 'users_app:crear' %}" class="button">Crear Usuario</a>        
+        </div>
     </form>
 {% endblock content %}

@@ -39,6 +39,7 @@ class CreateUserForm(forms.ModelForm):
             'nombres',
             'apellidos',
             'genero',
+            'foto'
             )
     
     
@@ -89,6 +90,7 @@ class UpdateUserForm(forms.ModelForm):
             'apellidos',
             'genero',
             'email',
+            'foto',
             
         )
     

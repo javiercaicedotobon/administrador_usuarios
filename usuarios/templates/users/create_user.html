@@ -7,13 +7,16 @@ Crear usuario
 {% endblock title%}
 
 {% block content %}
+{% include "includes/header1.html" %}
 
-    <h4 style="text-align:center; padding-top: 1%">CREAR USUARIO</h4>
 
-    <form method="POST" style='padding-top: 1%; padding-left: 10%; padding-right: 10%'>{% csrf_token %}
+    <h4 style="text-align:center; padding-top: 0%">CREAR USUARIO</h4>
+
+    <form method="POST" style='padding-top: 0%; padding-left: 30%; padding-right: 30%' enctype="multipart/form-data">{% csrf_token %}
         {{form.as_p}}
         
         <button class="submit success button">Crear</button>
     </form>   
 
+    
 {% endblock content %}

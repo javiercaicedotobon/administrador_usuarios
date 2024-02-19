@@ -7,8 +7,12 @@ Todos los usuarios
 {% endblock title%}
 
 {% block content %}
+{% include "includes/header1.html" %}
 
-<h4 style="text-align:center; padding-top: 3%">TODOS LOS USUARIOS</h4>
+
+
+{% if user.is_superuser %}
+<h4 style="text-align:center">TODOS LOS USUARIOS REGISTRADOS</h4>
     
 
     <!--INICIO DE LA TABLA-->
@@ -16,30 +20,89 @@ Todos los usuarios
     <table>
         <thead>
         <tr>
-            <th width="100">USERNAME</th>
-            <th width='100'>NOMBRES</th>
-            <th width="100">APELLIDOS</th>
-            <th width="100">USUARIO ACTIVO</th>
-            <th width="50">CODIGO DE REGISTRO</th>
-            <th width="50">ACCIONES</th>
+            <th width="50">ID.Usuario</th>
+            <th width="50">Username</th>
+            <th width='80'>Nombres</th>
+            <th width="80">Apellidos</th>
+            <th width="80">Activo</th>
+            <th width="50">Cod.Registro</th>
+            <th width="200" style="text-align:center">ACCIONES</th>
         </tr>
         </thead>
         <tbody>
             {% for u in allusers %}
         <tr>
+            <td>{{u.id}}</td>
             <td>{{u.username}}</td>
             <td>{{u.nombres}}</td>
             <td>{{u.apellidos}}</td>
-            <td>{{u.is_active}}</td>
+
+            {% if u.is_active %}
+            <td>Activo</td>
+            {% else %}
+            <td>Inactivo</td>
+            {% endif %}
+            
             <td>{{u.codregistro}}</td>
-            <td>
-                <a class="button primary" href="">Ver</a>
+            {% if u.is_superuser %}
+            <td style="text-align:center">
+                <a class="button primary" href="{% url 'users_app:detail-user' u.id %}">Ver</a>                
             </td>
+            {% else %}
+            <td style="text-align:center">
+                <a class="button primary" href="{% url 'users_app:detail-user' u.id %}">Ver</a>
+                <a class="button primary" href="{% url 'users_app:update_user' u.id %}">Modificar</a>
+                <a class="button primary" href="{% url 'users_app:delete_user' u.id %}">Eliminar</a>
+            </td>
+            {% endif %}
+            
         </tr>
         {% endfor %} 
             
         </tbody>
     </table>
 </div>
+
+{% else %}    
+    <h3 style="text-align:center">Usted no tiene privilegios para acceder a este sitio</h3>    
+{% endif %}
+
+
+
+<div class='cell' style="text-align:center">
+    {% if is_paginated %}
+    <nav aria-label="Pagination">
+        <ul class="pagination">
+
+            {% if page_obj.has_previous %}                    
+            <li class="pagination-previous">
+               <a href="?page={{page_obj.previuos_page_number}}">Atras</a> 
+            </li>
+            {% endif %}
+
+
+            {% for pagina in paginator.page_range  %}
+            
+            {% if pagina == page_obj.number  %} 
+            <li class="current"><span class="show-for-sr">You're on page</span>{{pagina}}</li>
+            {% else %}    
+            <li><a href="?page={{pagina}}">{{pagina}}</a></li> 
+            {% endif %}  
+            
+            {% endfor %}
+
+          
+            {% if page_obj.has_next %} 
+            <li class="pagination-next">
+                <a href="?page={{page_obj.next_page_number}}">Siguiente</a>
+            </li>
+            {% endif %}
+
+        </ul>
+      </nav>
+    {% endif %}
+</div>
+
+
 
 {% endblock content %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title%}
+Eliminar Usuario
+{% endblock title%}
+
+{% block content %}
+{% include "includes/header1.html" %}
+
+{% if user.is_superuser %}
+
+    <h3 style="text-align:center; padding-top: 1%">ELIMINAR USUARIO</h3>
+    <H5 style="text-align:center; padding-top: 1%"><strong>Usuario : </strong>{{usuario.username}}</H5>
+
+    <div style="text-align:center">
+    <form method="POST" style="padding-top: 1%">{% csrf_token %}
+        <strong>Nombre: </strong>{{usuario.nombres}}
+        {{user.apellidos}} <br>
+        <strong>Correo: </strong>{{usuario.email}} <br> 
+        <strong>Sexo: </strong>{{usuario.get_genero_display}} <br> <br>
+        <button class="submit success button" >Eliminar</button>
+    </form>
+    </div>
+
+{% else %}    
+    <h3 style="text-align:center">Usted no tiene privilegios para acceder a este sitio</h3>    
+{% endif %}
+
+{% endblock content %}

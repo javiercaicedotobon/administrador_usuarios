@@ -1,7 +1,7 @@
 <div class="top-bar">
     <div class="top-bar-left">
       <ul class="dropdown menu" data-dropdown-menu>
-        <li class="menu-text">GESTIONAR USUARIOS</li>
+        <li class="menu-text">GESTION DE USUARIOS</li>
 
         {% if user.is_superuser %}
         <li>
@@ -15,7 +15,7 @@
 
         <li><a href="{% url 'users_app:update' user.id %}">Actualizar Datos</a></li>
         <li><a href="{% url 'users_app:update_password' %}">Cambiar Contraseña</a></li>
-        <li><a href="">Disponible</a></li>
+        <li><a href="{% url 'users_app:user_info' user.id %}">Mi perfil</a></li>
       </ul>
     </div>
     <div class="top-bar-right">

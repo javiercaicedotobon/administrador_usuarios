@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title%}
+Actualizar Usuario
+{% endblock title%}
+
+{% block content %}
+{% include "includes/header1.html" %}
+
+{% if user.is_superuser %}
+
+
+    <h2 style="text-align:center; padding-top: 1%">ACTUALIZAR USUARIO</h2>
+    <h5 style="text-align:center">Usuario : {{usuario.username}}</h5>
+
+    <form method="POST" style='padding-top: 0%; padding-left: 30%; padding-right: 30%'>{% csrf_token %}
+        {{form.as_p}}
+        <button class="submit success button">Actualizar</button>
+    </form>
+
+
+{% else %}    
+    <h3 style="text-align:center">Usted no tiene privilegios para acceder a este sitio</h3>    
+{% endif %}
+
+
+{% endblock content %}

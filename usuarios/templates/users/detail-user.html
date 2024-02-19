@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title%}
+Informacion del usuarios
+{% endblock title%}
+
+
+{% block content %}
+{% include "includes/header1.html" %}
+
+{% if user.is_superuser %}
+
+
+<h2 style="text-align:center; padding-top: 5%" >INFORMACION DEL USUARIO</h2>
+
+<div style='padding-top: 3%; padding-left: 10%; padding-right: 10%'>
+    <table>
+        <thead>
+        <tr>
+            <th width="50">Nombre de Usuario</th>
+            <th width='80'>Nombres</th>
+            <th width="80">Apellidos</th>
+            <th width="80">Usuario</th>
+            <th width="80">Correo</th>
+            <th width="50">Cod.Registro</th>
+            
+        </tr>
+        </thead>
+        <tbody>        
+            <tr>
+                <td>{{usuario.username}}</td>
+                <td>{{usuario.nombres}}</td>
+                <td>{{usuario.apellidos}}</td>
+                {% if usuario.is_active %}
+                <td>Activo</td>
+                {% else %}
+                <td>Inactivo</td>
+                {% endif %}
+                <td>{{usuario.email}}</td>         
+                <td>{{usuario.codregistro}}</td>            
+            </tr>           
+        </tbody>
+    </table>   
+
+</div>
+
+
+{% else %}    
+    <h3 style="text-align:center">Usted no tiene privilegios para acceder a este sitio</h3>    
+{% endif %}
+
+{% endblock content %}

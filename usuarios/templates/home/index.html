@@ -8,7 +8,7 @@ Inicio{% endblock title%}
 {% block content %}
 {% include "includes/header.html" %}
     
-    <h5 style='padding-top: 1%'>Usuario : {{user}}</h5>
+    <h6 style='padding-top: 1%; padding-left: 1.5%;'><b>Bienvenido :</b> {{user}}</h6>
     
 
 <!-- INICIO MENSAJE DE BIENVENIDA-->
@@ -19,8 +19,12 @@ Inicio{% endblock title%}
             <h5>Controla todos tus usuario desde esta APP</h5>
             <p>
                 Esta aplicacion esta diseñada para que el administrador pueda controlar sus usuarios,
-                pueden agregar, modificar y eliminar usuarios
-            <a href="#">Ver los usuarios</a>
+                pueden agregar, modificar y eliminar usuarios. <br>
+                
+            {% if user.is_superuser %}
+            <a href="{% url 'users_app:users_all' %}">Ver los usuarios</a>            
+            {% endif %}
+            
           </div>
     </div>
 </div>
